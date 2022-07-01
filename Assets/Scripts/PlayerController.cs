@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     public bool canMove = false;
-    Rigidbody rb;
+    private Rigidbody _rb;
     public float sensitivityMultiplier;
     public float deltaThreshold;
     Vector2 firstTouchPosition;
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
     void Update()
     {
@@ -38,14 +38,14 @@ public class PlayerController : MonoBehaviour
     void ResetValues()
     {
         //Reset values.
-        rb.velocity = new Vector3(0f, rb.velocity.y, rb.velocity.z);
+        _rb.velocity = new Vector3(0f, _rb.velocity.y, _rb.velocity.z);
         firstTouchPosition = Vector2.zero;
         finalTouchX = 0f;
         currentTouchPosition = Vector2.zero;
     }
     void FixedRun()
     {
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, runSpeed * Time.fixedDeltaTime);
+        _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, runSpeed * Time.fixedDeltaTime);
     }
     void SwipeMovement()
     {
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
             if (firstTouchPosition == currentTouchPosition)
             {
-                rb.velocity = new Vector3(0f, rb.velocity.y, rb.velocity.z);
+                _rb.velocity = new Vector3(0f, _rb.velocity.y, _rb.velocity.z);
             }
 
             finalTouchX = transform.position.x;
@@ -71,8 +71,8 @@ public class PlayerController : MonoBehaviour
                 finalTouchX = (transform.position.x + (touchDelta.x * sensitivityMultiplier));
             }
 
-            rb.position = new Vector3(finalTouchX, transform.position.y, transform.position.z);
-            rb.position = new Vector3(Mathf.Clamp(rb.position.x, minXPos, maxXPos), rb.position.y, rb.position.z);
+            _rb.position = new Vector3(finalTouchX, transform.position.y, transform.position.z);
+            _rb.position = new Vector3(Mathf.Clamp(_rb.position.x, minXPos, maxXPos), _rb.position.y, _rb.position.z);
 
             firstTouchPosition = Input.mousePosition;
         }

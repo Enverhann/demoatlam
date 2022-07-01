@@ -9,7 +9,7 @@ public class SaveManager : MonoBehaviour
     private int _levelIndex;
     private static bool loaded = false;
     private static int _currentLevel = 1;
-    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI _levelText;
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class SaveManager : MonoBehaviour
     }
     void Start()
     {
-        levelText.text = "Level:" + _currentLevel.ToString();
+        _levelText.text = "Level:" + _currentLevel.ToString();
         LoadGame();
         SaveGame();
         PlayerPrefs.SetInt("CurrentLevel", _currentLevel);

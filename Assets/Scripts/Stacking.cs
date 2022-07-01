@@ -10,13 +10,13 @@ public class Stacking : MonoBehaviour
 
     [SerializeField] private Transform previous;
     [SerializeField] private Transform parent;
-    private BoxCollider parentCollider;
+    private BoxCollider _collider;
 
     public List<Transform> collectedObjects;
     public List<Transform> activeObjects;
 
     public Transform Parent { get => parent; set => parent = value; }
-    public BoxCollider ParentCollider { get => parentCollider; set => parentCollider = value; }
+    public BoxCollider ParentCollider { get => _collider; set => _collider = value; }
     public Transform Previous { get => previous; set => previous = value; }
 
     private void Awake()
@@ -33,7 +33,7 @@ public class Stacking : MonoBehaviour
     {
         collectedObjects = new List<Transform>();
         activeObjects = new List<Transform>();
-        parentCollider = parent.GetComponent<BoxCollider>();
+        _collider = parent.GetComponent<BoxCollider>();
     }
 
     private void LateUpdate()
@@ -90,8 +90,8 @@ public class Stacking : MonoBehaviour
             other.transform.localPosition += new Vector3(0, 0, previous.localScale.z);
             previous = other.transform;
 
-            parentCollider.size += new Vector3(0, 0, other.transform.localScale.z);
-            parentCollider.center += new Vector3(0, 0, other.transform.localScale.z / 2);
+            _collider.size += new Vector3(0, 0, other.transform.localScale.z);
+            _collider.center += new Vector3(0, 0, other.transform.localScale.z / 2);
 
             other.GetComponent<Collecting>().isCollected = true;
 

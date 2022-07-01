@@ -5108,7 +5108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 411221592}
-  levelText: {fileID: 1880511209}
+  _levelText: {fileID: 1880511209}
 --- !u!4 &1878516865
 Transform:
   m_ObjectHideFlags: 0

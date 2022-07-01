@@ -2,22 +2,22 @@
 
 public class CollectableConverter : MonoBehaviour
 {
-    private Stacking stacking;
+    private Stacking _stacking;
 
     public Mesh[] mesh;
 
     private void Awake()
     {
-        stacking = GameObject.Find("Stack").GetComponent<Stacking>();
+        _stacking = GameObject.Find("Stack").GetComponent<Stacking>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Stack")
         {
-            for (int i = 0; i < stacking.collectedObjects.Count; i++)
+            for (int i = 0; i < _stacking.collectedObjects.Count; i++)
             {
-                stacking.collectedObjects[i].GetComponent<BoxCollider>().enabled = true;
+                _stacking.collectedObjects[i].GetComponent<BoxCollider>().enabled = true;
             }
         }
         else if (other.tag == "Gold" || other.tag == "Diamond" || other.tag == "Money")
@@ -28,7 +28,7 @@ public class CollectableConverter : MonoBehaviour
                 case "Money":
 ;
                     other.GetComponent<MeshFilter>().mesh = mesh[1];
-                    other.GetComponent<MeshRenderer>().material = stacking.materials[1];
+                    other.GetComponent<MeshRenderer>().material = _stacking.materials[1];
                     //other.transform.localScale = new Vector3(2, 2, 2);
                     other.GetComponent<Collecting>().type = Collecting.CollectableTypes.Gold;
                     break;
@@ -36,7 +36,7 @@ public class CollectableConverter : MonoBehaviour
                 case "Gold":
 
                     other.GetComponent<MeshFilter>().mesh = mesh[2];
-                    other.GetComponent<MeshRenderer>().material = stacking.materials[2];
+                    other.GetComponent<MeshRenderer>().material = _stacking.materials[2];
                     //other.transform.localScale = new Vector3(2, 2, 2);
                     other.GetComponent<Collecting>().type = Collecting.CollectableTypes.Diamond;
                     break;

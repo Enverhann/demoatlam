@@ -6,18 +6,18 @@ public class Conveyor : MonoBehaviour
 {
     [SerializeField] private GameObject materialHolder;
 
-    private float speed = 0.1f;
-    private new Renderer renderer;
-    private float offset;
+    private float _speed = 0.1f;
+    private new Renderer _renderer;
+    private float _offset;
     public static int score;
     private PlayerEffectAnimations _player;
     public Button nextLevelButton;
-    private Stacking stacking;
+    private Stacking _stacking;
     void Awake()
     {
         _player = GameObject.Find("Player").GetComponent<PlayerEffectAnimations>();
-        stacking = GameObject.Find("Stack").GetComponent<Stacking>();
-        renderer = materialHolder.GetComponent<Renderer>();
+        _stacking = GameObject.Find("Stack").GetComponent<Stacking>();
+        _renderer = materialHolder.GetComponent<Renderer>();
     }
 
     void Update()
@@ -27,19 +27,19 @@ public class Conveyor : MonoBehaviour
 
     public void MaterialOffset()
     {
-        offset = speed * Time.time;
-        renderer.material.SetTextureOffset("_MainTex", new Vector2(0, offset));
+        _offset = _speed * Time.time;
+        _renderer.material.SetTextureOffset("_MainTex", new Vector2(0, _offset));
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Stack")
         {
-            for (int i = 0; i < stacking.collectedObjects.Count; i++)
+            for (int i = 0; i < _stacking.collectedObjects.Count; i++)
             {
-                stacking.collectedObjects[i].GetComponent<BoxCollider>().enabled = true;
+                _stacking.collectedObjects[i].GetComponent<BoxCollider>().enabled = true;
             }
-            stacking.ParentCollider.enabled = false;
+            _stacking.ParentCollider.enabled = false;
         }
         else if (other.tag == "Gold" || other.tag == "Diamond" || other.tag == "Money")
         {
@@ -49,7 +49,7 @@ public class Conveyor : MonoBehaviour
             other.transform.DOLocalMoveZ(0, 0.1f);
             other.transform.DOLocalMoveX(-18, 3);
 
-            stacking.collectedObjects.Remove(other.transform);
+            _stacking.collectedObjects.Remove(other.transform);
             ATM.score += ((int)other.GetComponent<Collecting>().type);
             Destroy(other.gameObject, 3);
         }
